@@ -15,6 +15,7 @@
 """
 U_L = -1
 D_R = 1
+START = "s"
 UP = "u"
 DOWN = "d"
 LEFT = "l"
@@ -37,194 +38,6 @@ class Route():
     def pathInsert(self, road):
         self.path.append(road)
 
-    def searchingPath(self):
-        no_search = self.notSearch()
-        before_pathed = self.checkFourDirection()
-
-        if before_pathed in [UP, DOWN, RIGHT, LEFT]:
-            if no_search:
-                if no_search in "XY":
-                    no_search = self.whichCorner()
-
-                    if no_search in "s":
-                        print(no_search)
-
-                    elif no_search in "ur":
-                        print(no_search)
-
-                    elif no_search in "dl":
-                        print(no_search)
-
-                    else:
-                        print(no_search)
-
-                elif no_search in "x":
-                    if no_search in "0":
-                        print(no_search)
-
-                    else:
-                        print(no_search)
-
-                else:
-                    if no_search in "0":
-                        print(no_search)
-
-                    else:
-                        print(no_search)
-
-            else:
-                print(no_search)
-                print("False")
-
-        else:
-            if no_search:
-                if no_search in "XY":
-                    no_search = self.whichCorner()
-
-                    if no_search in "s":
-                        print(no_search)
-
-                    elif no_search in "ur":
-                        print(no_search)
-
-                    elif no_search in "dl":
-                        print(no_search)
-
-                    else:
-                        print(no_search)
-
-                elif no_search in "x":
-                    if no_search in "0":
-                        print(no_search)
-
-                    else:
-                        print(no_search)
-
-                else:
-                    if no_search in "0":
-                        print(no_search)
-
-                    else:
-                        print(no_search)
-
-            else:
-                print(no_search)
-                print("False")
-
-    def checkFourDirection(self):
-        x = self.path_now_x
-        y = self.path_now_y
-
-        up_x = x + U_L
-        down_x = x + D_R
-
-        left_y = y + U_L
-        right_y = y + D_R
-
-        result = []
-
-        try:
-            up = self.toString(up_x, y)
-
-            if self.isWalkBefore(up):
-                result.append(UP)
-
-            else:
-                raise IndexError
-
-        except:
-            result.append(" ")
-
-        try:
-            down = self.toString(down_x, y)
-
-            if self.isWalkBefore(down):
-                result.append(DOWN)
-
-            else:
-                raise IndexError
-
-        except:
-            result.append(" ")
-
-        try:
-            left = self.toString(x, left_y)
-
-            if self.isWalkBefore(left):
-                result.append(LEFT)
-
-            else:
-                raise IndexError
-
-        except:
-            result.append(" ")
-
-        try:
-            right = self.toString(x, right_y)
-
-            if self.isWalkBefore(right):
-                result.append(RIGHT)
-
-            else:
-                raise IndexError
-
-        except:
-            result.append(" ")
-
-        return result
-
-    def toString(self, pos_x, pos_y):
-        return str(pos_x) + "," + str(pos_y)
-        
-    def notSearch(self):
-        if (self.path_now_x <= 0 or self.path_now_x >= typed) and (self.path_now_y <= 0 or self.path_now_y >= typed):
-            return "XY" # side 4 corner
-        
-        else:
-            if self.path_now_x <= 0 or self.path_now_x >= typed:
-                if self.path_now_x <= 0:
-                    return "x_0" # left side
-
-                else:
-                    return "x_t" # right side
-
-            if self.path_now_y <= 0 or self.path_now_y >= typed:
-                if self.path_now_y <= 0:
-                    return "y_0" # up side
-                
-                else:
-                    return "y_t" # down side
-
-        return ""
-
-    def whichCorner(self):
-        """
-            whichCorner -> four side corner of String
-                    s : start 
-                    ur : second right corner 
-                    dl : third down left corner 
-                    dr : last down right corner
-        """
-        if self.path_now_x <= 0 and self.path_now_y <= 0:
-            return "s" # start
-
-        elif self.path_now_x <= 0 and self.path_now_y >= typed:
-            return "ur" # up right
-
-        elif self.path_now_x >= typed and self.path_now_y <= 0:
-            return "dl" # down left
-
-        else:
-            return "dr" # down right
-
-    def isWalkBefore(self, pos):
-        try:
-            if pos in self.path_before:
-                return True
-        
-        except:
-            return False
-
 
 def typingPath(path_count):
     route = Route(path_count)
@@ -232,7 +45,6 @@ def typingPath(path_count):
     for _ in range(path_count):
         route.pathInsert(splitAndInt(input()))
 
-    route.searchingPath()
     print(route.total_score)
 
 def splitAndInt(list):
