@@ -28,6 +28,7 @@ typed = int(input())
 class Route():
     path = []
     path_before = []
+    total_route_path = []
     total_score = 0
     end_point = 0
 
@@ -38,6 +39,50 @@ class Route():
 
     def pathInsert(self, road):
         self.path.append(road)
+
+    def initAfterSetting(self):
+        self.total_score += self.path[self.path_now_x][self.path_now_y]
+
+    def searching(self):
+        end = self.end_point - 1
+
+        self.initAfterSetting()
+        
+        while True:
+            self.nextRouteRecord()
+
+            if self.path_now_x >= end and self.path_now_y >= end:
+                print(self.total_score)
+                print("".join(self.total_route_path))
+                break
+
+    def nextRouteRecord(self):
+        now_x, now_y = self.path_now_x, self.path_now_y
+        to_check_x, to_check_y = self.nextPos(now_x, now_y)
+
+        next_path = self.expensiveOne()
+        next_direct = next_path[0]
+        self.total_score += next_path[1]
+        next_x, next_y = to_check_x[next_direct], to_check_y[next_direct]
+
+        self.directAppend(next_direct)
+        self.setNowPosX(next_x)
+        self.setNowPosY(next_y)
+        self.pathBeforeAppend(next_x, next_y)
+        
+    def directAppend(self, direct_code):
+        direct = ['R', 'D', 'L', 'U']
+        self.total_route_path.append(direct[direct_code])
+    
+    def setNowPosX(self, pos_x):
+        self.path_now_x = pos_x
+
+    def setNowPosY(self, pos_y):
+        self.path_now_y = pos_y
+
+    def pathBeforeAppend(self, pos_x, pos_y):
+        history_path = str(f"{pos_x},{pos_y}")
+        self.path_before.append(history_path)
 
     def expensiveOne(self):
         is_walk_ok = self.searchOfPossiblePath()
@@ -51,8 +96,9 @@ class Route():
                 checked_value.append(self.callValue(on))
 
         value = max(checked_value)
+        print(checked_value, value)
 
-        return checked_value.index(value), max(checked_value)
+        return checked_value.index(value), value
 
     def callValue(self, direction):
         now_x, now_y = self.path_now_x, self.path_now_y
@@ -78,7 +124,21 @@ class Route():
         for pos_x, pos_y in zip(to_check_x, to_check_y):
             can_go.append(self.checkNextPath(pos_x, pos_y))
 
+        can_go = self.disableLeftOrUp(can_go)
+
         return can_go
+
+    def disableLeftOrUp(self, direct):
+        now_x, now_y = self.path_now_x, self.path_now_y
+        end = self.end_point - 1
+        
+        if now_x == end:
+            direct[LEFT], direct[UP] = False, False
+
+        if now_y == end:
+            direct[UP] = False
+
+        return direct
 
     def nextPos(self, now_x, now_y):
         return [now_x, now_x + D_R, now_x, now_x + U_L], [now_y + D_R, now_y, now_y + U_L, now_y]
@@ -104,7 +164,7 @@ class Route():
     def isPassOk(self, pos_x, pos_y):
         if pos_x < 0 or pos_x >= self.end_point or pos_y < 0 or pos_y >= self.end_point:
             return False
-        
+
         else:
             return True
 
@@ -117,14 +177,13 @@ class Route():
             return False
 
 
-def typingPath(path_count):
+def searcingRoute(path_count):
     route = Route(path_count)
 
     for _ in range(path_count):
         route.pathInsert(splitAndInt(input()))
-
-    print(route.total_score)
-    print(route.expensivePath())
+    
+    route.searching()
 
 def splitAndInt(list):
     return [int(a) for a in list.split()]
@@ -132,4 +191,5 @@ def splitAndInt(list):
 def testPrint(route):
     print(route)
 
-typingPath(typed)
+
+searcingRoute(typed)
