@@ -3,7 +3,9 @@
 
     상하좌우로 인접한 원소들을 방문해 나가야 한다. 즉 왼쪽, 오른쪽, 위쪽, 아래쪽의 네 가지 이동이 가능하다. 대각선으로는 이동이 불가능하다.
     한 번 방문한 원소는 다시 방문할 수 없다.
-    이러한 제약을 만족하면서 임의의 경로를 따라 A[N][N]에 이르면 이 경로 상에 방문되었던 원소들의 값의 총합이 그 경로의 점수가 된다. 임의의 N×N 이차원 배열이 주어질 때, A[1][1]에서 A[N][N]에 이르는 경로의 점수를 최대화하는 프로그램을 작성하시오.
+    이러한 제약을 만족하면서 임의의 경로를 따라 A[N][N]에 이르면 이 경로 상에 방문되었던 원소들의 값의 총합이 그 경로의 점수가 된다. 
+    
+    임의의 N×N 이차원 배열이 주어질 때, A[1][1]에서 A[N][N]에 이르는 경로의 점수를 최대화하는 프로그램을 작성하시오.
 
     입력
     첫째 줄에는 이차원 배열의 크기를 나타내는 정수 N(3≤N≤100)이 주어진다. 다음 N개의 줄에는 각각의 N개의 정수(-100이상 100이하)가 빈 칸을 사이에 두고 주어지는데, 둘째 줄에는 A[1][1]～A[1][N], 셋째 줄에는 A[2][1]～A[2][N], … , N+1번째 줄에는 A[N][1]～A[N][N]의 값이 주어진다.
@@ -25,10 +27,12 @@ class Route():
     path = []
     path_before = []
     total_score = 0
+    end_point = 0
 
-    def __init__(self):
+    def __init__(self, typed):
         self.path_now_x, self.path_now_y = 0, 0
         self.next_x, self.next_y = None, None
+        self.end_point = typed
 
     def pathInsert(self, road):
         self.path.append(road)
@@ -223,7 +227,7 @@ class Route():
 
 
 def typingPath(path_count):
-    route = Route()
+    route = Route(path_count)
 
     for _ in range(path_count):
         route.pathInsert(splitAndInt(input()))
