@@ -3,7 +3,6 @@ package BaekjoonQuiz.StepPrint;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.*;
 
 public class WeLoveKri {
     static public void main(String args[]) throws IOException{
