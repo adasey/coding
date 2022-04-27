@@ -1,20 +1,32 @@
 number = int(input())
 
-NATURE = [a for a in range(10)]
+def showHanNum(number):
+    count = 99
 
-def unberHun(number):
-    count = 0
-    result = 0
-    for a in range(10, number + 1):
-        for b in str(a):
-            if result == int(b):
-                continue
+    if underHundred(number):
+        print(number)
+    
+    else:
+        if number > 110:
+            if number > 999:
+                number = 999
+            
+            number += 1
 
-            else:
-                result = int(b)
+            for num in range(111, number):
+                check = [str(num)]
+                
+                first, second = int(check[0][0]) - int(check[0][1]), int(check[0][1]) - int(check[0][2])
+
+                if first == second:
+                    count += 1
+
+            print(count)
         
-        count += 1
+        else:
+            print(count)
 
-    return count
+def underHundred(number):
+    return True if number < 100 else False
 
-print(unberHun(number))
+showHanNum(number)
