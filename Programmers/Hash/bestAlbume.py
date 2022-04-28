@@ -13,22 +13,16 @@ def solution(genres, plays):
 
         genres_sum[b] = a
 
-    best_genres.append(genres_sum.pop(fst))
+    genres_count = len(genres_sum)
 
-    temp = bigValueIndex(genres_total[best_genres[0]], []).copy()
+    for a in range(genres_count):
+        best_genres.append(genres_sum.pop(max(genres_sum)))
 
-    result.extend(temp)
-
-    for a in range(1, 4):
-        if len(genres_sum.keys()) >= 1:
-            best_genres.append(genres_sum.pop(max(genres_sum)))
-
-            temp = bigValueIndex(genres_total[best_genres[a]], []).copy()
-
-            result.extend(temp)
-
-        else:
-            return result
+        temp = bigValueIndex(genres_total[best_genres[a]], []).copy()
+        
+        result.extend(temp)
+        
+    return result
 
 def changeValues(genres, plays):
     genres_total = {}
@@ -49,10 +43,6 @@ def changeValues(genres, plays):
 
     return temp_sum, genres_total
 
-# {500: [0], 150: [2], 800: [3]}
-# {500: [0], 150: [2], 800: [3, 1]}
-# {500: [0]}
-# {500: [0, 2]}
 def bigValueIndex(play, temp):
     try:
         temp.extend(play.pop(max(play))[:2])
