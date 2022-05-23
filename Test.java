@@ -3,7 +3,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.*;
+// import java.util.*;
 
 public class Test { // class 명 Main
     static public void main(String args[]) throws IOException {
